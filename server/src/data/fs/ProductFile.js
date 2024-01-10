@@ -21,10 +21,10 @@ class ProductManager {
   }
 
   create(title, photo, price, stock) {
-    try {
-      if (!title || !photo || !price || !stock) {
-        throw new Error("Title, photo, price, stock are required");
-      } else {
+    return new Promise((resolve, reject) => {
+      try {
+        
+  
         const product = {
           id: randomBytes(12).toString("hex"),
           title,
@@ -32,36 +32,33 @@ class ProductManager {
           price,
           stock,
         };
-
+  
         ProductManager.#products.push(product);
-
+  
         promises
           .writeFile(
             this.path,
             JSON.stringify(ProductManager.#products, null, 2),
             "utf-8"
           )
-          .then(() =>
-            console.log(`Registro exitoso del producto con ID: ${product.id}`)
-          )
-          .catch((error) => console.log(error.message));
+          .then(() => {
+            console.log(`Registro exitoso del producto con ID: ${product.id}`);
+            resolve(product);
+          })
+          .catch((error) => {
+            console.error(error.message);
+            reject(error);
+          });
+      } catch (error) {
+        console.error(error.message);
+        reject(error);
       }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
-    }
+    });
   }
+  
 
   read() {
-    // return new Promise((resolve, reject) => {
-    //     fs.promises.readFile(this.path, 'utf-8')
-    //         .then(data => {
-    //             const dataProducts = JSON.parse(data)
-    //             console.log(dataProducts)
-    //             resolve(dataProducts)
-    //         })
-    //         .catch(error => reject(error));
-    // });
+  
     try {
       if (ProductManager.#products.length === 0) {
         throw new Error("There arent products");
@@ -132,7 +129,7 @@ class ProductManager {
     }
   }
 
-const testProducts = new ProductManager("./src/fs/files/product.json");
+const testProducts = new ProductManager("./src/data/fs/files/product.json");
 
 export default testProducts
 // testProducts.create(
