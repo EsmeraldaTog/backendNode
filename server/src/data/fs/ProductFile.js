@@ -9,9 +9,7 @@ class ProductManager {
     if (!existFile) {
       writeFileSync(this.path, JSON.stringify([], null, 2));
     } else {
-      ProductManager.#products = JSON.parse(
-        readFileSync(this.path, "utf-8")
-      );
+      ProductManager.#products = JSON.parse(readFileSync(this.path, "utf-8"));
     }
   }
 
@@ -23,8 +21,6 @@ class ProductManager {
   create(title, photo, price, stock) {
     return new Promise((resolve, reject) => {
       try {
-        
-  
         const product = {
           id: randomBytes(12).toString("hex"),
           title,
@@ -32,9 +28,9 @@ class ProductManager {
           price,
           stock,
         };
-  
+
         ProductManager.#products.push(product);
-  
+
         promises
           .writeFile(
             this.path,
@@ -55,10 +51,8 @@ class ProductManager {
       }
     });
   }
-  
 
   read() {
-  
     try {
       if (ProductManager.#products.length === 0) {
         throw new Error("There arent products");
@@ -113,25 +107,57 @@ class ProductManager {
         (product) => product.id !== id
       );
       ProductManager.#products = products;
-     await  promises.writeFile(
+      await promises.writeFile(
         this.path,
         JSON.stringify(ProductManager.#products, null, 2),
         "utf-8"
       );
       console.log(ProductManager.#products);
       return ProductManager.#products;
-
-
     } catch (error) {
-        console.log(error.message);
-        return error.message;
-      }
+      console.log(error.message);
+      return error.message;
     }
   }
 
+  async update(pid,data) {
+    try {
+      console.log('PID:', pid);
+      console.log('Data:', data);
+      const productIndex = ProductManager.#products.findIndex(
+        (product) => product.id === pid
+      );
+
+      if (productIndex=== -1) {
+        throw new Error(`Product con ID ${pid} no encontrado`);
+      }
+
+      // Crear un nuevo objeto de orden con las propiedades actualizadas
+      const productUpdate = {
+        ...ProductManager.#products[productIndex],
+        ...data
+      };
+      // Actualizar la matriz #orders con el nuevo objeto de orden
+      ProductManager.#products[productIndex]= productUpdate;
+      await promises.writeFile(
+        this.path,
+        JSON.stringify(ProductManager.#products, null, 2),
+        "utf-8"
+      );
+      //console.log(`Order with ID: ${order.id}`);
+      console.log(`Producto actualizado:`, productUpdate);
+      return productUpdate
+    } catch (error) {
+      
+      return next(error)
+    }
+  }
+
+}
+
 const testProducts = new ProductManager("./src/data/fs/files/product.json");
 
-export default testProducts
+export default testProducts;
 // testProducts.create(
 //   "Computadora Portatil",
 //   "http://dummyimage.com/196x100.png/cc0000/ffffff",

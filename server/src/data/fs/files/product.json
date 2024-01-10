@@ -1,45 +1,9 @@
 [
   {
-    "id": "5834e3c8b2bcfbb2844dffcc",
-    "title": "Teclado Mecanico",
-    "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
-  },
-  {
-    "id": "9712850b193d70db50f8415e",
-    "title": "Teclado Mecanico",
-    "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
-  },
-  {
-    "id": "f9272e62922b6650e966cae6",
-    "title": "Teclado Mecanico",
-    "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
-  },
-  {
-    "id": "7cef1ed0122b48a6d764fbe9",
-    "title": "Teclado Mecanico",
-    "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
-  },
-  {
-    "id": "8041c3d2675f3893bf761991",
-    "title": "Teclado Mecanico",
-    "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
-  },
-  {
     "id": "1971617645000deb6e84186c",
-    "title": "Teclado Mecanico",
+    "stock": 23,
     "photo": "prueba.jpg",
-    "price": 3200,
-    "stock": 23
+    "price": 3200
   },
   {
     "id": "dc4f93ea48af7e281a044849",
@@ -148,6 +112,13 @@
   },
   {
     "id": "b57adb599425e01c8c04bb57",
+    "title": "Mouse",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 2
+  },
+  {
+    "id": "376d1dcba35aaaec0d4ef2aa",
     "title": "Mouse",
     "photo": "prueba.jpg",
     "price": 3200,

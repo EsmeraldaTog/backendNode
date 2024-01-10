@@ -170,7 +170,7 @@ class OrderManager {
         );
   
         console.log(`Order with id ${oid} has been deleted`);
-        return OrderManager.#orders;
+        return idOrder;
       } else {
         throw new Error(`Order with ID ${oid} not found`);
       }

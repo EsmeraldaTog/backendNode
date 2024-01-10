@@ -1,10 +1,27 @@
 import { Router } from "express";
 import testUser from "../../data/fs/UserFiles.js";
+import propsUsers from "../../middlewares/propsUsers.mid.js";
 
 
 const usersRouter= Router();
 
 // // END POINTS users
+
+// Endpoint para creacion de users
+usersRouter.post("/", propsUsers, async (req, response, next) => {
+    try {
+      const { name,photo,email} = req.body;
+      const newUser = await testUser.create(name,photo,email);
+  
+      return response.json({
+        statusCode: 201,
+        response: newUser,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
+
 
 usersRouter.get("/", async(req, response) =>{
     try {
@@ -20,7 +37,7 @@ usersRouter.get("/", async(req, response) =>{
         return response.status(404).json({success:false,message:"not found"})
     }
     } catch (error) {
-        console.log(error.message)
+        next(error)
         
     }
     
@@ -43,7 +60,7 @@ usersRouter.get("/:uid", async(req, response) =>{
         return response.status(404).json({success:false,message:"not found"})
     }
     } catch (error) {
-        console.log(error.message)
+        next(error)
         
     }
     
