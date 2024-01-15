@@ -19,9 +19,7 @@ class UserManager {
 
   async create(name, photo, email) {
     try {
-      if (!name || !photo || !email) {
-        throw new Error("Name, photo, email are required");
-      } else {
+       
         const user = {
           id: randomBytes(16).toString("hex"),
           name,
@@ -30,14 +28,14 @@ class UserManager {
         };
 
         UserManager.#users.push(user);
-        await _promises.writeFile(
+        await promises.writeFile(
           this.path,
           JSON.stringify(UserManager.#users, null, 2),
           "utf-8"
         );
         console.log(` Usuario with ID: ${user.id}`);
         return user;
-      }
+      
     } catch (error) {
       console.log(error.message);
       return error.message;
@@ -102,9 +100,43 @@ class UserManager {
       }
     }
 
+    async update(uid,data) {
+      try {
+        const userIndex = UserManager.#users.findIndex(
+          (user) => user.id === uid
+        );
+  
+        if (userIndex=== -1) {
+          throw new Error(`User con ID ${uid} no encontrada`);
+        }
+  
+        // Crear un nuevo objeto de orden con las propiedades actualizadas
+        const updatedUser = {
+          ...UserManager.#users[userIndex],
+          ...data
+        };
+        // Actualizar la matriz #orders con el nuevo objeto de orden
+        UserManager.#users[userIndex] = updatedUser;
+        await promises.writeFile(
+          this.path,
+          JSON.stringify(UserManager.#users, null, 2),
+          "utf-8"
+        );
+        //console.log(`Order with ID: ${order.id}`);
+        console.log(updatedUser);
+      } catch (error) {
+        console.error(error.message);
+        return error.message;
+      }
+    }
+  
+
+
 }
-const testUser = new UserManager("./src/fs/files/fileUsers.json");
+const testUser = new UserManager("./src/data/fs/files/fileUsers.json");
+
 export default testUser;
+//testUser.update("62bdbe8314f2e9b0dcd517b7ce708ca0",{name:"Lucia Cortes"})
 // testUser.create(
 //   "Esmeralda Torres",
 //   "http://dummyimage.com/196x100.png/cc0000/ffffff",
@@ -117,4 +149,3 @@ export default testUser;
 // );
 // testUser.read();
 // testUser.readOne(20);
-//testUser.destroy("5c4463f8053f83f292deafa7ae07db13")

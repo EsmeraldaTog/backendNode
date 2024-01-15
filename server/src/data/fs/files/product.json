@@ -1,0 +1,127 @@
+[
+  {
+    "id": "1971617645000deb6e84186c",
+    "stock": 23,
+    "photo": "prueba.jpg",
+    "price": 3200
+  },
+  {
+    "id": "dc4f93ea48af7e281a044849",
+    "title": "Teclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "4f582e2fe37b804b1cdad08f",
+    "title": "Teclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "3cf99f4c472033edec7cca1c",
+    "title": "Teclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "16e7bfca17e638ca6c2d6602",
+    "title": "Tuuueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "bd43f884f76c3e324dbf99e4",
+    "title": "Tuuueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "5e0713a78c2d76132a57c793",
+    "title": "Tuuueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "3a883593f77630dd9c37edba",
+    "title": "Tuuueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "35ea8cac97954c54ac7bac84",
+    "title": "Tuuueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "163273c1ad98f0c5d300d353",
+    "title": "Tuussueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "ac6167bc39feed56568ceab7",
+    "title": "Tuussueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "d95d54be1326422cfe0d8825",
+    "title": "Tuussueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "698a486b3ba5e8c7b8447817",
+    "title": "Tuussueclado Mecanico",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "a5d47d07e2785d1f359aa0b9",
+    "title": "Bocinas",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "64f9e6fdc848095109e86550",
+    "title": "Bocinas",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "d42e82f49e65cc0588b7988e",
+    "title": "Bocinas",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  },
+  {
+    "id": "b57adb599425e01c8c04bb57",
+    "title": "Mouse",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 2
+  },
+  {
+    "id": "376d1dcba35aaaec0d4ef2aa",
+    "title": "Mouse",
+    "photo": "prueba.jpg",
+    "price": 3200,
+    "stock": 23
+  }
+]
