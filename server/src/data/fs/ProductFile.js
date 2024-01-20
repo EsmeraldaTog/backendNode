@@ -31,7 +31,7 @@ class ProductManager {
 
         ProductManager.#products.push(product);
 
-        promises
+       promises
           .writeFile(
             this.path,
             JSON.stringify(ProductManager.#products, null, 2),
@@ -103,20 +103,25 @@ class ProductManager {
   }
   async destroy(id) {
     try {
-      const products = ProductManager.#products.filter(
-        (product) => product.id !== id
-      );
-      ProductManager.#products = products;
-      await promises.writeFile(
-        this.path,
-        JSON.stringify(ProductManager.#products, null, 2),
-        "utf-8"
-      );
-      console.log(ProductManager.#products);
-      return ProductManager.#products;
+      const productId=ProductManager.#products.find(product => product.id===id)
+      if(!productId){
+        return ('No se encontro el producto');
+      }else{
+        const products = ProductManager.#products.filter(
+          (product) => product.id !== productId
+        );
+        ProductManager.#products = products;
+        await promises.writeFile(
+          this.path,
+          JSON.stringify(ProductManager.#products, null, 2),
+          "utf-8"
+        );
+        
+        return productId;
+      }
+      
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      return next(error)
     }
   }
 
