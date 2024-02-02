@@ -1,21 +1,42 @@
-const propsProducts = (req, res, next) => {
-  const { title, photo, price, stock } = req.body;
+// const propsProducts = (req, res, next) => {
+//   const { title, photo, price, stock } = req.body;
+//   if (
+//     !title ||
+//     typeof title !== "string" ||
+//     !photo ||
+//     typeof photo !== "string" ||
+//     (price !== undefined && typeof price !== "number") ||
+//     (stock !== undefined && typeof stock !== "number")
+//   ) {
+//     return res.json({
+//       statusCode: 400,
+//       response: `${req.method} ${req.baseUrl}${req.route.path} : The values of title, photo, price, and stock are required, and price and stock must be of type number.`,
+//     });
+//   } else {
+//     return next();
+//   }
+// };
+
+const propsProducts = (data) => {
+  const { title, photo, price, stock } = data;
   if (
     !title ||
     typeof title !== "string" ||
     !photo ||
     typeof photo !== "string" ||
-    (price !== undefined && typeof price !== "number") ||
-    (stock !== undefined && typeof stock !== "number")
+    (price === undefined && typeof price !== "number") ||
+    (stock === undefined && typeof stock !== "number")
   ) {
-    return res.json({
-      statusCode: 400,
-      response: `${req.method} ${req.baseUrl}${req.route.path} : The values of title, photo, price, and stock are required, and price and stock must be of type number.`,
-    });
-  } else {
-    return next();
+    const error = new Error(
+      "The values of title, photo, price, and stock are required, and price and stock must be of type number."
+    );
+    error.statusCode = 400;
+    throw error;
+    // return res.json({
+    //   statusCode: 400,
+    //   response: `${req.method} ${req.baseUrl}${req.route.path} : The values of title, photo, price, and stock are required, and price and stock must be of type number.`,
+    // });
   }
 };
-
 
 export default propsProducts;
