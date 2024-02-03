@@ -1,3 +1,4 @@
+import "dotenv/config.js"
 import express from "express";
 import morgan from "morgan";
 import { createServer } from "http";
@@ -12,6 +13,7 @@ import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import router from "./src/routers/index.router.js";
 import testProducts from "./src/data/fs/ProductFile.js";
 import propsProducts from "./src/middlewares/propsProducts.mid.js";
+import dbConnection from "./src/utils/db.js";
 
 
 
@@ -25,7 +27,10 @@ const httpServer=createServer(app);
 const socketServer= new Server(httpServer)
 httpServer.listen(PORT, ()=> {
 
-console.log("app listen on port "+ PORT)});
+console.log("app listen on port "+ PORT)
+dbConnection()
+
+});
 
 
 // levantar servidor de socket on y palabra connection para habilitar el handshake
