@@ -24,7 +24,7 @@ const app = express();
 const PORT=8080;
 const httpServer=createServer(app);
 
-const socketServer= new Server(httpServer)
+// const socketServer= new Server(httpServer)
 httpServer.listen(PORT, ()=> {
 
 console.log("app listen on port "+ PORT)
@@ -33,21 +33,21 @@ dbConnection()
 });
 
 
-// levantar servidor de socket on y palabra connection para habilitar el handshake
-socketServer.on('connection', (socket)=>{
-    console.log(socket.id)
-socket.emit("products", testProducts.read())
-socket.on("newproduct", async (data) => {
-    try {
-        propsProducts(data);
-      await testProducts.create(data.title, data.photo, data.price, data.stock);
-      socketServer.emit("products", await testProducts.read());
-    } catch (error) {
-      console.log(error);
-    }
-  });
+// // levantar servidor de socket on y palabra connection para habilitar el handshake
+// socketServer.on('connection', (socket)=>{
+//     console.log(socket.id)
+// socket.emit("products", testProducts.read())
+// socket.on("newproduct", async (data) => {
+//     try {
+//         propsProducts(data);
+//       await testProducts.create(data.title, data.photo, data.price, data.stock);
+//       socketServer.emit("products", await testProducts.read());
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   });
 
-})
+// })
 
 
 
