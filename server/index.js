@@ -2,6 +2,7 @@ import "dotenv/config.js"
 import express from "express";
 import morgan from "morgan";
 import { createServer } from "http";
+import expressSession  from "express-session";
 import { Server } from "socket.io"
 //CONFIGURAR EL MOTOR DE PLANTILLAS DE HANDLEBARS
 import { engine } from "express-handlebars";
@@ -14,6 +15,7 @@ import router from "./src/routers/index.router.js";
 import testProducts from "./src/data/fs/ProductFile.js";
 import propsProducts from "./src/middlewares/propsProducts.mid.js";
 import dbConnection from "./src/utils/db.js";
+import session from "express-session";
 
 
 
@@ -60,10 +62,18 @@ app.set("view engine","handlebars");
 app.set('views', __dirname +"/src/views");
 
 //middlewares: son funciones
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"))
 app.use(morgan("dev"))
+app.use(
+    expressSession({
+      secret: process.env.SECRET_KEY,
+      resave: true,
+      saveUninitialized: true,
+      cookie: { maxAge: 60000 },
+    }))
 
 //endpoints
 
