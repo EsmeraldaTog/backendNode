@@ -56,8 +56,8 @@ viewsRouter.get("/", async (req, res, next) => {
 });
 
 viewsRouter.use("/real", realRouter)
-viewsRouter.use("/form", formRouter)
-viewsRouter.use("/register", registerRouter)
-viewsRouter.use("/login", loginRouter)
+viewsRouter.use("/product", formRouter)
+viewsRouter.use("/auth", registerRouter)
+viewsRouter.use("/auth", loginRouter)
 
 export default viewsRouter;

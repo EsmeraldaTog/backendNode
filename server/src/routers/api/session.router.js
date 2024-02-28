@@ -1,6 +1,25 @@
 import { Router } from "express";
+import { testUsers } from "../../data/mongo/manager.mongo.js";
+import has8char from "../../middlewares/has8char.mid.js";
+
 
 const sessionsRouter = Router();
+
+//register
+sessionsRouter.post("/register", has8char,async (req, res, next) => {
+  try {
+    const data = req.body;
+    const user= await testUsers.create(data);
+    return res.json({
+      statusCode: 201,
+      message: "Registered!",
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+//register
 
 sessionsRouter.post("/login", async (req, res, next) => {
   try {
