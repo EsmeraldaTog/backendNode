@@ -132,6 +132,24 @@ class UserManager {
   
 
 
+// buscar por email
+    async readOne(email) {
+      try {
+        const userEmail = UserManager.#users.find((product) => product.email === email);
+        if (userEmail) {
+          console.log(userEmail);
+          return userEmail;
+        } else {
+          throw new Error("The email does not exist");
+        }
+       
+      } catch (error) {
+        console.log(error.message);
+        //return error.message;
+      }
+    }
+
+
 }
 const testUser = new UserManager("./src/data/fs/files/fileUsers.json");
 

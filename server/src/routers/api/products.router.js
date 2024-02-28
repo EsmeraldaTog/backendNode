@@ -1,14 +1,15 @@
 import { Router } from "express";
-import testProducts from "../../data/fs/ProductFile.js";
+//import testProducts from "../../data/fs/ProductFile.js";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
+import { testProducts } from "../../data/mongo/manager.mongo.js";
 
 const productsRouter = Router();
 
 // Endpoint para creacion de productos
-productsRouter.post("/", propsProducts, async (req, response, next) => {
+productsRouter.post("/",  async (req, response, next) => {
   try {
     const { title, photo, price, stock } = req.body;
-    const newProduct = await testProducts.create(title, photo, price, stock);
+    const newProduct = await testProducts.create({title, photo, price, stock});
 
     return response.json({
       statusCode: 201,
@@ -22,18 +23,30 @@ productsRouter.post("/", propsProducts, async (req, response, next) => {
 // obtener todos los productos
 productsRouter.get("/", async (req, response, next) => {
   try {
-    const products = await testProducts.read();
-    if (!products.length == 0) {
-      response.json({ success: true, response: products });
-    } else {
-      return response
-        .status(404)
-        .json({ success: false, message: "not found" });
+    const orderAndPaginate={
+        limit:req.query.limit || 20,
+        page:req.query.page || 1,
+        sort:{title:1}
     }
-  } catch (error) {
-    return next(error);
-  }
-});
+    
+    const filter={}
+    
+    if (req.query.title) {
+        filter.title = new RegExp(req.query.title.trim(), "i");
+      }
+        const products= await testProducts.read({filter,orderAndPaginate})
+        return response.json( 
+            { success:true,
+                response: products
+     })
+        
+        } catch (error) {
+            next(error)
+            
+        }
+        
+        
+    })
 
 //obtener un producto
 
