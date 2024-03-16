@@ -109,11 +109,11 @@ return report;
 async readByEmail(email) {
   try {
     const docEmail = await this.model.findOne({ email });
-    if (!docEmail || docEmail.length === 0) {
+    /*if (!docEmail || docEmail.length === 0) {
       const error = new Error(`User with email ${email} not found`);
       error.statusCode = 404;
       throw error;
-    }
+    }*/
     return docEmail;
   } catch (error) {
     throw error;
