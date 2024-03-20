@@ -2,11 +2,12 @@ import { Router } from "express";
 //import testProducts from "../../data/fs/ProductFile.js";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
 import { testProducts } from "../../data/mongo/manager.mongo.js";
+import isAdmin from "../../middlewares/isAdmin.mid.js";
 
 const productsRouter = Router();
 
 // Endpoint para creacion de productos
-productsRouter.post("/",  async (req, response, next) => {
+productsRouter.post("/", isAdmin, async (req, response, next) => {
   try {
     const { title, photo, price, stock } = req.body;
     const newProduct = await testProducts.create({title, photo, price, stock});
