@@ -25,7 +25,7 @@ sessionsRouter.post(
   }
 );
 
-//register
+//login
 
 sessionsRouter.post(
   "/login",
@@ -39,6 +39,39 @@ sessionsRouter.post(
         return res.json({
           statusCode: 200,
           message: "Logged in",
+          //session: req.session,
+          token:req.token,
+        });
+      
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+
+//login google
+sessionsRouter.get(
+  "/google",
+  passport.authenticate("google",{scope:["email", "profile" ]})
+  
+  
+);
+//google callback
+
+
+sessionsRouter.get(
+  "/google/cb",
+  passport.authenticate("google",{
+    session: false,
+    failureRedirect: "/api/sessions/badauth",
+  }),
+  async (req, res, next) => {
+    try {
+     
+        return res.json({
+          statusCode: 200,
+          message: "Logged in with google",
           session: req.session,
         });
       
