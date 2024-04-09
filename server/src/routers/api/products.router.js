@@ -3,11 +3,13 @@ import { Router } from "express";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
 import { testProducts } from "../../data/mongo/manager.mongo.js";
 import isAdmin from "../../middlewares/isAdmin.mid.js";
+import  passport from "../../middlewares/passport.mid.js"
+//import isAuth from "../../middlewares/isAuth.js";
 
 const productsRouter = Router();
 
 // Endpoint para creacion de productos
-productsRouter.post("/", isAdmin, async (req, response, next) => {
+productsRouter.post("/",passport.authenticate("jwt",{session:false}), isAdmin, async (req, response, next) => {
   try {
     const { title, photo, price, stock } = req.body;
     const newProduct = await testProducts.create({title, photo, price, stock});
