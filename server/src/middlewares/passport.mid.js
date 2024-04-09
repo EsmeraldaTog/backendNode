@@ -1,7 +1,8 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
+import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+const { GOOGLE_ID, GOOGLE_CLIENT,SECRET } = process.env;
 
 import { createHash, validatePass } from "../utils/hash.util.js";
 import { testUsers } from "../data/mongo/manager.mongo.js";
@@ -83,7 +84,6 @@ passport.use(
     }
 else{
     user={
-
         email: profile.id,
         name: profile.name.givenName,
         lastName: profile.name.familyName,
@@ -108,4 +108,30 @@ else{
       }));
    
 
+
+
+
+      passport.use(
+        "jwt",
+        new JwtStrategy({
+          jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies["token"]]),
+          secretOrKey: SECRET,
+         },
+         async (jwt_payload, done) => {
+           try {
+             let user = await testUsers.readByEmail(jwt_payload.email);
+             if (user) {
+                // se protege la contraseña
+                user.password= null;
+                return done(null,user)
+             }
+             else 
+             return done(null, false);
+           } catch (error) {
+             return done(error);
+           }
+         }
+       )
+      );
+      
 export default passport;

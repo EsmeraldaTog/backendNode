@@ -62,7 +62,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(morgan("dev"));
 
-//app.use(cookieParser());
+app.use(cookieParser());
 // app.use(
 //   expressSession({
 //     secret: process.env.SECRET_KEY,

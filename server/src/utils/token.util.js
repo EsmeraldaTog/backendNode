@@ -9,13 +9,11 @@ function createToken(data){
     )
     return token
 }
-function verifyToken(headers) {
-    const token = headers.token;
-
+function verifyToken(token) {
     if (token) {
         try {
             // Verifying token and returning decoded data
-            const data = JsonWebTokenError.verify(token, process.env.SECRET); // Assuming JWT_SECRET is your secret key
+            const data = jwt.verify(token, process.env.SECRET); // Assuming JWT_SECRET is your secret key
             return data;
         } catch (error) {
             // If verification fails, throw an error
