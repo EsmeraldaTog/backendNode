@@ -1,0 +1,94 @@
+<main>
+  <section class="flex flex-wrap">
+    {{#each products}}
+    <div class="w-full sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
+      <div class="card w-full bg-base-100 shadow-xl p-2">
+        <figure class="px-10 pt-10">
+          <img src="{{this.photo}}" alt="Shoes" class="rounded-xl w-auto h-32" />
+        </figure>
+        <div class="card-body items-center text-center">
+          <h2 class="card-title">{{this.title}}</h2>
+          <h2 class="card-price">{{this.price}}</h2>
+          <div class="card-actions">
+            <button class="btn btn-primary">Agregar al Carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </section>
+
+{{!-- <div class="join">
+  {{#if pages.hasPrevPage}}
+    <a href="?page={{pages.prevPage}}" class="join-item btn"> « </a>
+  {{/if}}
+
+  {{#each pages}}
+    {{#if isCurrent}}
+      <button class="join-item btn active">{{pageNumber}}</button>
+    {{else}}
+      <a href="?page={{pageNumber}}" class="join-item btn">{{pageNumber}}</a>
+    {{/if}}
+  {{/each}}
+
+  {{#if pages.hasNextPage}}
+    <a href="?page={{pages.nextPage}}" class="join-item btn">»</a>
+  {{/if}}
+</div>
+ --}}
+
+{{!-- <div class="join">
+  {{#if pages.hasPrevPage}}
+    <a href="?page={{pages.prevPage}}" class="join-item btn">«</a>
+  {{else}}
+    <button class="join-item btn" disabled>«</button>
+  {{/if}}
+  
+  <button class="join-item btn">Pagina {{pages.isCurrent}}</button>
+
+  {{#if pages.hasNextPage}}
+    <a href="?page={{pages.nextPage}}" class="join-item btn">»</a>
+  {{else}}
+    <button class="join-item btn" disabled>»</button>
+  {{/if}}
+</div> --}}
+{{!-- <div class="join">
+  {{#if pages.hasPrevPage}}
+    <a href="?page={{pages.prevPage}}" class="join-item btn">«</a>
+  {{else}}
+    <button class="join-item btn" disabled>«</button>
+  {{/if}}
+  
+  {{#each pages}}
+    {{#if isCurrent}}
+      <button class="join-item btn active">Página {{pageNumber}}</button>
+    {{else}}
+      <a href="?page={{pageNumber}}" class="join-item btn">Página {{pageNumber}}</a>
+    {{/if}}
+  {{/each}}
+
+  {{#if pages.hasNextPage}}
+    <a href="?page={{pages.nextPage}}" class="join-item btn">»</a>
+  {{else}}
+    <button class="join-item btn" disabled>»</button>
+  {{/if}}
+</div> --}}
+<div class="join">
+  {{#if hasPrevPage}}
+    <a href="?page={{prevPage}}" class="join-item btn">«</a>
+  {{/if}}
+
+  {{#each pages}}
+    {{#if isCurrent}}
+      <button class="join-item btn">Pagina {{pageNumber}}</button>
+    {{/if}}
+  {{/each}}
+
+  {{#if hasNextPage}}
+    <a href="?page={{nextPage}}" class="join-item btn">»</a>
+  {{/if}}
+</div>
+
+
+
+</main>
