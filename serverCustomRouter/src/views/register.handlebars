@@ -1,12 +1,22 @@
-<label class="form-control w-full max-w-xs">
+<div class="w-50 flex  justify-center mt-3 border-solid border-2">
+<label class="form-control w-full max-w-xs ">
   <div class="label">
     <span>Registro de Usuario</span>
     
   </div>
-  <input type="text" placeholder="Type here" class="name input input-bordered w-full max-w-xs" />
+
+  <div class="label">
+    <span class="label">Nombre del Usuario</span>
+  </div>
+  <input type="text" placeholder="Nombre de Usuario" class="name input input-bordered w-full max-w-xs" />
+  
+    <div class="label">
+    <span class="">Correo Electronico</span>
+  </div>
+  <input type="email" placeholder="Correo electronico" class="email input input-bordered w-full max-w-xs" />
   
   <div class="label">
-    <span class="">Imagen</span>
+    <span class="">Foto</span>
   </div>
   <input type="text" placeholder="Type here" class=" photo input input-bordered w-full max-w-xs" />
 
@@ -14,9 +24,16 @@
     <span class="label-text">Email </span>
   </div>
   <input type="text" placeholder="Type here" class="email input input-bordered w-full max-w-xs" />
-  
 
-  
-  
-  <button class="saveButton btn btn-active btn-neutral">Guardar Datos</button>
+
+<div class="label">
+<span class="label-text">Contraseña </span> 
+</div>   
+
+  <input type="password" placeholder="Type here" class="email input input-bordered w-full max-w-xs" class="grow" value="password" />
+
+  <button class="saveButton btn btn-active btn-neutral mt-3">Guardar Datos</button>
 </label>
+</div>
+
+<script src="/index.js"></script>

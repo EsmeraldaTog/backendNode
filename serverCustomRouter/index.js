@@ -1,4 +1,4 @@
-import "dotenv/config.js";
+import env from "./src/utils/env.util.js"
 import express from "express";
 import morgan from "morgan";
 import { createServer } from "http";
@@ -108,14 +108,16 @@ app.use(cookieParser());
 //     saveUninitialized: true,
 //   })
 // );
+
+console.log(env)
 app.use(
   expressSession({
-    secret: process.env.SECRET_KEY,
+    secret: env.SECRET_KEY,
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
       ttl:60, //chequear la unidad de ttl
-      mongoUrl: process.env.LINK_MONGO
+      mongoUrl: env.LINK_MONGO
     }),
   })
 );

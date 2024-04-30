@@ -13,7 +13,7 @@ btnsign.addEventListener("click", async () => {
     response = await response.json();
     alert(response.message)
    if(response.statusCode===200){
-      location.replace("/auth/login");
+    location.replace("/");
       // localStorage.removeItem("token")
     }   
    
