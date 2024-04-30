@@ -1,12 +1,13 @@
-import { Router } from "express";
+
 import { testUsers } from "../../data/mongo/manager.mongo.js";
 import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
+import CustomRouter from "../CustomRouter.js";
 
-const sessionsRouter = Router();
-
+export default class SessionsRouter extends CustomRouter{
+init(){
 //register
-sessionsRouter.post(
+this.create(
   "/register",
   has8char,
   passport.authenticate("register", {
@@ -27,8 +28,8 @@ sessionsRouter.post(
 
 //login
 
-sessionsRouter.post(
-  "/login",
+this.create(
+  "/login",["PUBLIC"],
   passport.authenticate("login", {
     session: false,
     failureRedirect: "/api/sessions/badauth",
@@ -53,12 +54,12 @@ sessionsRouter.post(
 );
 
 //login google
-sessionsRouter.get(
+this.read(
   "/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
 //google callback
-sessionsRouter.get(
+this.read(
   "/google/cb",
   passport.authenticate("google", {
     session: false,
@@ -77,7 +78,7 @@ sessionsRouter.get(
   }
 );
 
-sessionsRouter.post("/", async (req, res, next) => {
+this.create("/", async (req, res, next) => {
   try {
     if (req.session.email) {
       return res.json({
@@ -94,9 +95,9 @@ sessionsRouter.post("/", async (req, res, next) => {
   }
 });
 
-/// Ensignout Esta pendiente borrar la cookie con el token que se genero en el logeo
-sessionsRouter.post(
-  "/signout",
+
+this.create(
+  "/signout",["ADMIN","PREM","USER"],
   passport.authenticate("jwt", {
     session: false,
     failureRedirect: "/api/sessions/signout/cb",
@@ -121,7 +122,7 @@ sessionsRouter.post(
 );
 
 ///badauth
-sessionsRouter.get("/badauth", (req, res, next) => {
+this.read("/badauth", (req, res, next) => {
   try {
     return res.json({
       statusCode: 401,
@@ -134,7 +135,7 @@ sessionsRouter.get("/badauth", (req, res, next) => {
 
 ///signout /cb
 
-sessionsRouter.get("/signout/cb", async (req, res, next) => {
+this.read("/signout/cb", async (req, res, next) => {
   try {
     return res.json({
       statusCode: 400,
@@ -145,4 +146,17 @@ sessionsRouter.get("/signout/cb", async (req, res, next) => {
   }
 });
 
-export default sessionsRouter;
+
+
+
+}
+
+
+}
+
+
+
+
+
+
+

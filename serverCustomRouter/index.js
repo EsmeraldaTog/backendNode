@@ -14,11 +14,13 @@ import __dirname from "./utils.js";
 //import router from "./src/routers/views/index.view.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
-import router from "./src/routers/index.router.js";
+// import router from "./src/routers/index.router.js";
 //import testProducts from "./src/data/fs/ProductFile.js";
 //import propsProducts from "./src/middlewares/propsProducts.mid.js";
 import dbConnection from "./src/utils/db.js";
 import cookieParser from "cookie-parser";
+import IndexRouter from "./src/routers/index.router.js";
+import cors from 'cors';
 
 
 //configuracion del servidor
@@ -56,6 +58,7 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/src/views");
 
 //middlewares: son funciones
+app.use(cors({origin: true,credentials: true }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -118,7 +121,7 @@ app.use(
 );
 
 //endpoints
-
-app.use("/", router);
+const router= new IndexRouter();
+app.use("/", router.getRouter());
 app.use(errorHandler);
 app.use(pathHandler);
