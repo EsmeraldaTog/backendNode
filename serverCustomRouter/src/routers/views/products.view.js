@@ -3,7 +3,7 @@ import CustomRouter from "../CustomRouter.js";
 
 // const productsRouter = Router();
 
-export default class ProductsRouter extends CustomRouter {
+export default class ProductsView extends CustomRouter {
   init() {
     this.read("/form", ["ADMIN", "PREM"], async (req, res, next) => {
       try {

@@ -1,20 +1,20 @@
 
 
-import { testProducts } from "../../data/mongo/manager.mongo.js";
+import  testProducts  from "../../data/mongo/manager.mongo.js";
 import SessionsView from "./sessions.view.js";
 import ordersRouter from "../api/orders.router.js";
 
-import ProductsRouter from "./products.view.js";
+import ProductsView from "./products.view.js";
 import CustomRouter from "../CustomRouter.js";
 
 
 
 const sessionsRouter= new SessionsView();
-const productsRouter=new  ProductsRouter();
+const productsRouter=new  ProductsView();
 export default class ViewsRouter extends CustomRouter{
 init(){
   this.router.use("/products", productsRouter.getRouter())
-  this.router.use("/orders", ordersRouter)
+  // this.router.use("/orders", ordersRouter)
   this.router.use("/sessions", sessionsRouter.getRouter())
 
 

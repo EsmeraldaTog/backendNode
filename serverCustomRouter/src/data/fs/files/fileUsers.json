@@ -1,26 +1,34 @@
 [
   {
-    "id": "62bdbe8314f2e9b0dcd517b7ce708ca0",
-    "name": "Lucia Cortes",
+    "_id": "d36c3fe4dde69ee7e78417e3",
+    "name": "ESMERALDA prueba con repositor1y",
     "photo": "http://dummyimage.com/196x100.png/cc0000/ffffff",
-    "email": "esmeraldatorres.2305@gmail.com"
+    "email": "cdddd@gmail.com",
+    "password": "tazita123",
+    "role": 1,
+    "createdAt": "2024-05-20T08:23:48.242Z",
+    "updatedAt": "2024-05-20T08:23:48.242Z"
   },
   {
-    "id": "83405636c56bf21e725a0bc6ca29c52d",
-    "name": "Elvi Martinez",
+    "name": "Carlos Martinez Prueba Desde Mongo con password",
     "photo": "http://dummyimage.com/196x100.png/cc0000/ffffff",
-    "email": "elvis.12@hotmail.com"
+    "email": "correo-pruebapassport@gmail.com",
+    "password": "$2b$10$oyl3f8JK6OiWIPTuM3K74e3ZMIKys.qiyapmc0BsVSfhGH2beeq2O"
   },
   {
-    "id": "8a57ed75525c924de898094d65f8aa2c",
-    "name": "Esmeralda Torres",
+    "name": "Probando persistencia fs",
     "photo": "http://dummyimage.com/196x100.png/cc0000/ffffff",
-    "email": "esmeraldatorres.2305@gmail.com"
+    "email": "correomongo@gmail.com",
+    "password": "$2b$10$v2Flf2dUYWcCY1Ipji/fhus35gOL.R99rHvNujfPwBcmAHJk70Dia"
   },
   {
-    "id": "1feb5f3e65e5efda717e0478252bfe42",
-    "name": "Carlos Martinez",
+    "_id": "e4dfe4efefdaae348097feb7",
+    "name": "Probando persistencia fs 2",
     "photo": "http://dummyimage.com/196x100.png/cc0000/ffffff",
-    "email": "email@gmail.com"
+    "email": "correomoffngo@gmail.com",
+    "password": "$2b$10$l92eKYSg5LSEVxGMBJxN5u8xWwC.uhZCXsYGu9tcTowzGyya8nVa.",
+    "role": 1,
+    "createdAt": "2024-05-20T09:01:49.389Z",
+    "updatedAt": "2024-05-20T09:01:49.389Z"
   }
 ]

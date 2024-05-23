@@ -13,7 +13,7 @@ init(){
   });
 
 
-this.read("/login",["ADMIN"], async (req, res, next) => {
+this.read("/login",["PUBLIC"], async (req, res, next) => {
   try {
     return res.render("login", { title: "LOGIN" });
   } catch (error) {

@@ -1,5 +1,5 @@
 import { existsSync, writeFileSync, readFileSync, promises } from "fs";
-import { randomBytes } from "crypto";
+
 
 class UserManager {
   static #users = [];
@@ -17,25 +17,18 @@ class UserManager {
     this.init();
   }
 
-  async create(name, photo, email) {
+  async create(data) {
     try {
-       
-        const user = {
-          id: randomBytes(16).toString("hex"),
-          name,
-          photo,
-          email,
-        };
-
-        UserManager.#users.push(user);
-        await promises.writeFile(
-          this.path,
-          JSON.stringify(UserManager.#users, null, 2),
-          "utf-8"
-        );
-        console.log(` Usuario with ID: ${user.id}`);
-        return user;
       
+
+      UserManager.#users.push(data);
+      await promises.writeFile(
+        this.path,
+        JSON.stringify(UserManager.#users, null, 2),
+        "utf-8"
+      );
+      // console.log(` Usuario with ID: ${user.id}`);
+      return data;
     } catch (error) {
       console.log(error.message);
       return error.message;
@@ -49,10 +42,6 @@ class UserManager {
       } else {
         console.log(UserManager.#users);
         return UserManager.#users;
-        //   const readProducts = await fs.promises.readFile(this.path, "utf-8");
-        //   const ProductsObject = JSON.parse(readProducts);
-
-        //   console.log(ProductsObject);
       }
     } catch (error) {
       console.log(error.message);
@@ -62,9 +51,9 @@ class UserManager {
 
   async readOne(id) {
     try {
-      const userID = UserManager.#users.find((product) => product.id === id);
+      const userID = await UserManager.#users.find((user) => user._id === id);
       if (userID) {
-        console.log(userID);
+        console.log("User found with id " + userID._id);
         return userID;
       } else {
         throw new Error("The user does not exist");
@@ -80,80 +69,70 @@ class UserManager {
 
   async destroy(id) {
     try {
-      const users = UserManager.#users.filter(
-        (product) => product.id !== id
-      );
-      UserManager.#users = users;
+      const userId = await this.readOne(id);
+      if (!userId) {
+        return "No se encontro el Usuario";
+      } else {
+        const users = UserManager.#users.filter((user) => user._id !== id);
+        UserManager.#users = users;
 
-     await promises.writeFile(
-        this.path,
-        JSON.stringify(UserManager.#users, null, 2),
-        "utf-8"
-      );
-      console.log(UserManager.#users);
-      return UserManager.#users;
-
-
-    } catch (error) {
-        console.log(error.message);
-        return error.message;
-      }
-    }
-
-    async update(uid,data) {
-      try {
-        const userIndex = UserManager.#users.findIndex(
-          (user) => user.id === uid
-        );
-  
-        if (userIndex=== -1) {
-          throw new Error(`User con ID ${uid} no encontrada`);
-        }
-  
-        // Crear un nuevo objeto de orden con las propiedades actualizadas
-        const updatedUser = {
-          ...UserManager.#users[userIndex],
-          ...data
-        };
-        // Actualizar la matriz #orders con el nuevo objeto de orden
-        UserManager.#users[userIndex] = updatedUser;
         await promises.writeFile(
           this.path,
           JSON.stringify(UserManager.#users, null, 2),
           "utf-8"
         );
-        //console.log(`Order with ID: ${order.id}`);
-        console.log(updatedUser);
-      } catch (error) {
-        console.error(error.message);
-        return error.message;
+        console.log(UserManager.#users);
+        return UserManager.#users;
       }
+    } catch (error) {
+      throw error;
     }
+  }
+
+  async update(uid, data) {
+    try {
+      const userUpdate = await this.readOne(uid);
+
+      if (!userUpdate) {
+        throw new Error(`User  Not Found`);
+      }
+      for (const key in data) {
+        userUpdate[key] = data[key];
+      }
+      // actualizar la matriz orders
+      await promises.writeFile(
+        this.path,
+        JSON.stringify(UserManager.#users, null, 2),
+        "utf-8"
+      );
+      //console.log(`Order with ID: ${order.id}`);
+      console.log(userUpdate);
+      return userUpdate;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   
-
-
-// buscar por email
-    async readOne(email) {
-      try {
-        const userEmail = UserManager.#users.find((product) => product.email === email);
-        if (userEmail) {
-          console.log(userEmail);
-          return userEmail;
-        } else {
-          throw new Error("The email does not exist");
-        }
-       
-      } catch (error) {
-        console.log(error.message);
-        //return error.message;
+  async readByEmail({email}) {
+    try {
+      const one = await UserManager.#users.find((each) => each.email === email);
+      if (!one) {
+        return null;
+      } else {
+        return one;
       }
+    } catch (error) {
+      throw error;
     }
+  }
+
 
 
 }
-const testUser = new UserManager("./src/data/fs/files/fileUsers.json");
+const testUsers = new UserManager("./src/data/fs/files/fileUsers.json");
 
-export default testUser;
+export default testUsers;
 //testUser.update("62bdbe8314f2e9b0dcd517b7ce708ca0",{name:"Lucia Cortes"})
 // testUser.create(
 //   "Esmeralda Torres",

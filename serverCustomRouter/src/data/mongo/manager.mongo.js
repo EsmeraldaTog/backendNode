@@ -1,6 +1,4 @@
-import Product from "./models/product.model.js";
-import Order from "./models/orders.model.js";
-import User from "./models/user.model.js";
+
 import  mongoose from "mongoose";
 //import Types from "mongoose";
 
@@ -14,7 +12,7 @@ class MongoManager{
     async create(data) {
         try {
           const one = await this.model.create(data);
-          return one._id;
+          return one;
         } catch (error) {
           throw error;
         }
@@ -37,9 +35,6 @@ class MongoManager{
     //       }
     //     }
 
-
-
-    
     async read({filter,orderAndPaginate}){
       try {
         const all= await this.model
@@ -108,7 +103,7 @@ return report;
 
 async readByEmail(email) {
   try {
-    const docEmail = await this.model.findOne({ email });
+    const docEmail = await this.model.findOne({email});
     /*if (!docEmail || docEmail.length === 0) {
       const error = new Error(`User with email ${email} not found`);
       error.statusCode = 404;
@@ -187,9 +182,4 @@ try {
      }
    
 
-     const testProducts = new MongoManager(Product);
-    const testOrders = new MongoManager(Order);
-    const testUsers = new MongoManager(User);
-     //const orders = 
-     
-     export { testProducts ,testOrders,testUsers}
+export default  MongoManager
