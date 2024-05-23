@@ -1,30 +1,29 @@
 import fs from "fs";
 
 import { existsSync, writeFileSync, readFileSync, promises } from "fs";
-import { randomBytes } from "crypto";
 
 class OrderManager {
   static #orders = [];
 
-  static userExists(uid) {
-    const path = "./src/data/fs/files/fileUsers.json";
-    return new Promise((resolve, reject) => {
-      fs.promises
-        .readFile(path, "utf-8")
-        .then((data) => {
-          const dataObject = JSON.parse(data);
-          const userFound = dataObject.find((user) => user.id === uid);
-
-          if (userFound) {
-            console.log(userFound);
-            resolve(userFound);
-          } else {
-            console.log(`User with id ${uid} not found`);
-          }
-        })
-        .catch((error) => reject(error));
-    });
-  }
+  // static userExists(uid) {
+  //   const path = "./src/data/fs/files/fileUsers.json";
+  //   return new Promise((resolve, reject) => {
+  //     fs.promises
+  //       .readFile(path, "utf-8")
+  //       .then((users) => {
+  //         const dataObject = JSON.parse(users);
+  //         const userFound = dataObject.find((user) => user._id === uid);
+  //         console.log(userFound)
+  //         if (userFound) {
+  //           console.log(userFound);
+  //           resolve(userFound);
+  //         } else {
+  //           console.log(`User with id ${uid} not found`);
+  //         }
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // }
 
   static productExists(pid) {
     const path = "./src/data/fs/files/product.json";
@@ -33,7 +32,7 @@ class OrderManager {
         .readFile(path, "utf-8")
         .then((data) => {
           const dataObject = JSON.parse(data);
-          const productFound = dataObject.find((product) => product.id === pid);
+          const productFound = dataObject.find((product) => product._id === pid);
 
           if (productFound) {
             console.log(productFound);
@@ -61,24 +60,16 @@ class OrderManager {
     this.init();
   }
 
-  async create(pid, uid, quantity, state) {
+  async create(data) {
     try {
-      if (!pid || !uid || !quantity || !state) {
+      if (!data.pid || !data.uid || !data.quantity || !data.state) {
         throw new Error("pid, uid, quantity , state are required");
       }
 
-      await OrderManager.userExists(uid);
-      await OrderManager.productExists(pid);
+      // await OrderManager.userExists(data.uid);
+      await OrderManager.productExists(data.pid);
 
-      const order = {
-        id: randomBytes(12).toString("hex"),
-        pid,
-        uid,
-        quantity,
-        state,
-      };
-
-      OrderManager.#orders.push(order);
+   OrderManager.#orders.push(data);
 
       await promises.writeFile(
         this.path,
@@ -86,8 +77,7 @@ class OrderManager {
         "utf-8"
       );
 
-      console.log(`Order with ID: ${order.id}`);
-      return order;
+      return data;
     } catch (error) {
       console.error(error.message);
       return error.message;
@@ -127,7 +117,7 @@ class OrderManager {
   async update(oid, quantity, state) {
     try {
       const orderIndex = OrderManager.#orders.findIndex(
-        (order) => order.id === oid
+        (order) => order._id === oid
       );
 
       if (orderIndex === -1) {
@@ -157,10 +147,10 @@ class OrderManager {
 
   async destroy(oid) {
     try {
-      const idOrder = OrderManager.#orders.find(order => order.id === oid);
+      const idOrder = OrderManager.#orders.find(order => order._id === oid);
   
       if (idOrder) {
-        const orders = OrderManager.#orders.filter(order => order.id !== oid);
+        const orders = OrderManager.#orders.filter(order => order._id !== oid);
         OrderManager.#orders = orders;
   
         await promises.writeFile(

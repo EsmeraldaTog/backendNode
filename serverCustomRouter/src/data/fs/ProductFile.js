@@ -18,28 +18,28 @@ class ProductManager {
     this.init();
   }
 
-  create(title, photo, price, stock) {
+  create(data) {
     return new Promise((resolve, reject) => {
       try {
-        const product = {
-          id: randomBytes(12).toString("hex"),
-          title,
-          photo,
-          price,
-          stock,
-        };
+        // const product = {
+        //   id: randomBytes(12).toString("hex"),
+        //   title: data.title,
+        //   photo: data.photo,
+        //   price: data.price,
+        //   stock: data.stock,
+        // };
 
-        ProductManager.#products.push(product);
+        ProductManager.#products.push(data);
 
-       promises
+        promises
           .writeFile(
             this.path,
             JSON.stringify(ProductManager.#products, null, 2),
             "utf-8"
           )
           .then(() => {
-            console.log(`Registro exitoso del producto con ID: ${product.id}`);
-            resolve(product);
+            console.log(`Registro exitoso del producto con ID: ${data._id}`);
+            resolve(data);
           })
           .catch((error) => {
             console.error(error.message);
@@ -52,16 +52,16 @@ class ProductManager {
     });
   }
 
+  //pendiente mmodificar y agregar filtros, paginacion y ordenamiento
   read() {
     try {
       if (ProductManager.#products.length === 0) {
-        throw new Error("There arent products");
+        throw new Error("There aren't any document");
       } else {
         console.log(ProductManager.#products);
         return ProductManager.#products;
       }
     } catch (error) {
-      console.log(error.message);
       return error.message;
     }
   }
@@ -69,10 +69,10 @@ class ProductManager {
   readOne(id) {
     try {
       const productFound = ProductManager.#products.find(
-        (product) => product.id == id
+        (product) => product._id === id
       );
       if (productFound) {
-        console.log("Product found with id " + productFound.id);
+        console.log("Product found with id " + productFound._id);
         return productFound;
       } else {
         throw new Error("Product Not found");
@@ -103,12 +103,12 @@ class ProductManager {
   }
   async destroy(id) {
     try {
-      const productId=ProductManager.#products.find(product => product.id===id)
-      if(!productId){
-        return ('No se encontro el producto');
-      }else{
+      const productId = await this.readOne(id);
+      if (!productId) {
+        return "No se encontro el producto";
+      } else {
         const products = ProductManager.#products.filter(
-          (product) => product.id !== productId
+          (product) => product._id !== id
         );
         ProductManager.#products = products;
         await promises.writeFile(
@@ -116,34 +116,27 @@ class ProductManager {
           JSON.stringify(ProductManager.#products, null, 2),
           "utf-8"
         );
-        
+
         return productId;
       }
-      
     } catch (error) {
-      return next(error)
+      throw error;
     }
   }
 
-  async update(pid,data) {
+  async update(pid, data) {
     try {
-      console.log('PID:', pid);
-      console.log('Data:', data);
-      const productIndex = ProductManager.#products.findIndex(
-        (product) => product.id === pid
-      );
+      const productUpdate = await this.readOne(pid);
 
-      if (productIndex=== -1) {
-        throw new Error(`Product con ID ${pid} no encontrado`);
+      if (!productUpdate) {
+        throw new Error(`Product  Not Found`);
+      }
+      for (const key in data) {
+        productUpdate[key] = data[key];
       }
 
-      // Crear un nuevo objeto de orden con las propiedades actualizadas
-      const productUpdate = {
-        ...ProductManager.#products[productIndex],
-        ...data
-      };
       // Actualizar la matriz #orders con el nuevo objeto de orden
-      ProductManager.#products[productIndex]= productUpdate;
+
       await promises.writeFile(
         this.path,
         JSON.stringify(ProductManager.#products, null, 2),
@@ -151,13 +144,25 @@ class ProductManager {
       );
       //console.log(`Order with ID: ${order.id}`);
       console.log(`Producto actualizado:`, productUpdate);
-      return productUpdate
+      return productUpdate;
     } catch (error) {
-      
-      return next(error)
+      throw error;
     }
   }
 
+  async readByEmail(email) {
+    try {
+      const docEmail = await this.readOne(email);
+      /*if (!docEmail || docEmail.length === 0) {
+        const error = new Error(`User with email ${email} not found`);
+        error.statusCode = 404;
+        throw error;
+      }*/
+      return docEmail;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const testProducts = new ProductManager("./src/data/fs/files/product.json");

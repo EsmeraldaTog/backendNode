@@ -5,8 +5,11 @@ import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 const { GOOGLE_ID, GOOGLE_CLIENT,SECRET } = process.env;
 
 import { createHash, validatePass } from "../utils/hash.util.js";
-import { testUsers } from "../data/mongo/manager.mongo.js";
+import dao from "../data/index.factory.js";
+const { testUsers } = dao 
+// import  testUsers  from "../data/mongo/manager.mongo.js";
 import { createToken } from "../utils/token.util.js";
+import UserDTO from "../dto/users.dto.js";
 
 
 //nombre de la estrategia y el con structor de la estrategia local
@@ -18,6 +21,7 @@ try {
     if(!user){
         let data= req.body;
         data.password= createHash(password)
+        data = new UserDTO(data);        
         let user= await testUsers.create(data)
         return done(null,user);
     }

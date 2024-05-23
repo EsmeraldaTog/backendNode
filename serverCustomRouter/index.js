@@ -31,7 +31,7 @@ const httpServer = createServer(app);
 // const socketServer= new Server(httpServer)
 httpServer.listen(PORT, () => {
   console.log("app listen on port " + PORT);
-  dbConnection();
+  // dbConnection();
 });
 
 // // levantar servidor de socket on y palabra connection para habilitar el handshake

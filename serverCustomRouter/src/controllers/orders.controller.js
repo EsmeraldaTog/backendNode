@@ -6,10 +6,12 @@ class OrdersController {
     }
      create= async (req, response, next) => {
         try {
-          const { _id }= req.user
-          req.body.uid= _id
-          const { pid,  quantity, uid } = req.body;
-          const newOrder = await this.service.create({ pid, uid, quantity });
+      
+          const data = req.body;
+          data.uid=req.user._id;
+          console.log(req.user)
+          
+          const newOrder = await this.service.create(data);
         return response.success201(newOrder)
          
         } catch (error) {

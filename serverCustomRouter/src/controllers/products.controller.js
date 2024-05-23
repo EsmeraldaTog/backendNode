@@ -7,8 +7,10 @@ class ProductsController {
  }
     create= async (req, response, next) => {
         try {
-          const { title, photo, price, stock } = req.body;
-        const newProduct = await this.service.create({ title,photo,price,stock});
+          const data  = req.body;
+          console.log(req.user)
+      
+        const newProduct = await this.service.create(data);
           return response.success201(newProduct);
         } catch (error) {
           return next(error);

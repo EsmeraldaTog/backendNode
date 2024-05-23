@@ -1,7 +1,9 @@
 import { Router } from "express";
 
 import jwt from "jsonwebtoken";
-import { testUsers } from "../data/mongo/manager.mongo.js";
+
+import dao from "../data/index.factory.js";
+const { testUsers } =dao
 
 
 export default class CustomRouter {

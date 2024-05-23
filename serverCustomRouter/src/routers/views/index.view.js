@@ -1,6 +1,6 @@
 
 
-import { testProducts } from "../../data/mongo/manager.mongo.js";
+import  testProducts  from "../../data/mongo/manager.mongo.js";
 import SessionsView from "./sessions.view.js";
 import ordersRouter from "../api/orders.router.js";
 

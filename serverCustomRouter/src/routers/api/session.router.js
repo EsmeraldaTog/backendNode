@@ -1,5 +1,5 @@
 
-import { testUsers } from "../../data/mongo/manager.mongo.js";
+// import testUsers from "../../data/mongo/manager.mongo.js";
 import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import CustomRouter from "../CustomRouter.js";
@@ -8,7 +8,7 @@ export default class SessionsRouter extends CustomRouter{
 init(){
 //register
 this.create(
-  "/register",
+  "/register",["PUBLIC"],
   has8char,
   passport.authenticate("register", {
     session: false,
@@ -39,7 +39,7 @@ this.create(
       return res
         .cookie("token", req.token, {
           maxAge: 7 * 24 * 60 * 60,
-          httpOnly: true,
+          httpOnly: true,//evitar desde consola se acceda a cookie
         })
         .json({
           statusCode: 200,

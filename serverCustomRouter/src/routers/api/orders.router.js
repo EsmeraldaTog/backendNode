@@ -1,6 +1,7 @@
 
 import { create, destroy, read, readOne, report, update  } from "../../controllers/orders.controller.js";
 import CustomRouter from "../CustomRouter.js";
+import passport from "../../middlewares/passport.mid.js";
 
 
 export default class OrdersRouter extends CustomRouter{
@@ -8,11 +9,11 @@ export default class OrdersRouter extends CustomRouter{
   init(){
     
 // Endpoint para creacion de ordenes de compra
-this.create("/",["USER","PREM","ADMIN"],  create);
+this.create("/",["USER"],create);
 
 
 
-this.read("/",["ADMIN"] , read );
+this.read("/",["USER"] , read );
 
 // ordersRouter.get("/:oid", async(req, response,next) =>{
 //     try {
